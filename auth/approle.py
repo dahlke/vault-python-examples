@@ -9,22 +9,16 @@ VAULT_ADDR = os.getenv("VAULT_ADDR")
 APPROLE_ROLE_ID = os.getenv("APPROLE_ROLE_ID")
 APPROLE_SECRET_ID = os.getenv("APPROLE_SECRET_ID")
 
-if __name__ == "__main__":
+def get_kv_secret_with_approle():
 	# Purposely not passing in a token here to illustrated that we are not authenticated.
 	client = hvac.Client(url=VAULT_ADDR, token="")
 	print("is authenticated", client.is_authenticated())
 
-	# List the secrets
-	print("address", VAULT_ADDR, "role", APPROLE_ROLE_ID, "secret", APPROLE_SECRET_ID)
-
+	# Log into Vault
 	client.auth.approle.login(
 		role_id=APPROLE_ROLE_ID,
 		secret_id=APPROLE_SECRET_ID,
 	)
-
-	print("TOKEN AFTER LOGIN", client.token)
-	list_response = client.secrets.kv.v2.list_secrets(path="applications")
-	print("LIST", list_response, "\n")
 
  	# Read the data written under path: secret/foo
 	# Vault currently defaults the secret/ path to the KV secrets engine version 2 automatically when the Vault server is started in “dev” mode.
@@ -35,23 +29,5 @@ if __name__ == "__main__":
 	print("Project Name:", project_name)
 	print("Lead Contact Email:", lead_contact_email)
 
-	# If you want to do the whole sequence through python.
-	"""
-	role_id_resp = client.auth.approle.read_role_id(
-		role_name='some-role',
-	)
-	role_id =role_id_resp["data"]["role_id"]
-	print(f'AppRole role ID for some-role: {role_id}')
-
-	secret_id_resp = client.auth.approle.generate_secret_id(
-		role_name='some-role',
-		cidr_list=['127.0.0.1/32'],
-	)
-	secret_id = secret_id_resp["data"]["secret_id"]
-	print(f'AppRole secret ID for some-role: {secret_id}')
-
-	client.auth.approle.login(
-		role_id=role_id,
-		secret_id=secret_id,
-	)
-	"""
+if __name__ == "__main__":
+	get_kv_secret_with_approle()
