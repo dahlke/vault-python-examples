@@ -14,6 +14,6 @@ path "secret/data/applications/" {
   capabilities = ["list", "read"]
 }
 
-path "secret/data/applications/example-app" {
+path "secret/data/applications/example-approle" {
   capabilities = ["list", "read", "create", "update"]
 }

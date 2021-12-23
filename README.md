@@ -25,8 +25,8 @@ cd setup/
 ### AppRole
 
 ```bash
-export APPROLE_ROLE_ID=$(vault read -format=json auth/approle/role/example-app/role-id | jq -r .data.role_id)
-export APPROLE_SECRET_ID=$(vault write -format=json -f auth/approle/role/example-app/secret-id | jq -r .data.secret_id)
+export APPROLE_ROLE_ID=$(vault read -format=json auth/approle/role/example-approle/role-id | jq -r .data.role_id)
+export APPROLE_SECRET_ID=$(vault write -format=json -f auth/approle/role/example-approle/secret-id | jq -r .data.secret_id)
 
 echo $APPROLE_ROLE_ID
 echo $APPROLE_SECRET_ID
