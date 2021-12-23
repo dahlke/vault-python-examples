@@ -38,7 +38,3 @@ if __name__ == "__main__":
 	decrypt_resp = client.secrets.transit.decrypt_data(name="example-transit-key", ciphertext=ciphertext)
 	decrypted_plaintext_b64 = decrypt_resp["data"]["plaintext"]
 	print("Decrypted ciphertext:", base64.urlsafe_b64decode(decrypted_plaintext_b64))
-
-	# Delete the key
-
-

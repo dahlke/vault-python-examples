@@ -13,3 +13,4 @@ VAULT_TOKEN = os.getenv("VAULT_TOKEN")
 if __name__ == "__main__":
 	client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
 
+	# TODO: looks like HVAC doesn't support this natively right now.

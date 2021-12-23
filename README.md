@@ -4,7 +4,7 @@ Repo with Vault code samples using [`hvac`](https://hvac.readthedocs.io/en/stabl
 
 ## Setup
 
-### Setup the `virtualenv` and install the depencencies
+### Set up the `virtualenv` and install the depencencies
 
 ```bash
 virtualenv venv
@@ -25,6 +25,21 @@ export VAULT_ADDR="http://127.0.0.1:8200"
 export VAULT_TOKEN="root"
 cd setup/
 ./setup.sh
+```
+
+### Set up a Local Postgres Container
+
+Start a `postgres` containe.
+
+```bash
+export PGPASSWORD=postgres
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=$PGPASSWORD -d postgres
+```
+
+Once it's started, you can confirm you can connect with the Postgres client.
+
+```bash
+psql -U postgres -h localhost -p 5432
 ```
 
 ## Auth Methods
