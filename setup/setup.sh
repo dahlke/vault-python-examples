@@ -11,11 +11,12 @@ vault policy write vault-admin policies/admin-policy.hcl
 vault policy write example-approle policies/example-approle-policy.hcl
 
 echo "Seeding some sample secrets..."
-vault kv put secret/applications/example-approle project_name="Super Addicting App Project X" lead_contact_email="app-1@hashicorp.com"
+vault kv put secret/applications/example-approle project_name="Super Addicting App Project X" lead_contact_email="neil@hashicorp.com"
 
-echo "Enabling AppRole auth engine..."
+echo "Enabling AppRole auth method..."
 vault auth enable approle
 
+echo "Configuring the AppRole auth method..."
 vault write auth/approle/role/example-approle \
     secret_id_ttl=60m \
     token_num_uses=10 \
@@ -23,5 +24,11 @@ vault write auth/approle/role/example-approle \
     token_max_ttl=60m \
     secret_id_num_uses=40 \
 	token_policies="example-approle"
+
+echo "Configuring the PKI secrets engine..."
+
+echo "Configuring the transit secrets engine..."
+
+echo "Configuring the database secrets engine..."
 
 echo "Done."
