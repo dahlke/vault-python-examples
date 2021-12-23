@@ -1,5 +1,5 @@
 #!/bin/python3
-# https://hvac.readthedocs.io/en/stable/usage/secrets_engines/database.html
+# https://hvac.readthedocs.io/en/stable/usage/secrets_engines/pki.html
 
 import hvac
 import os
@@ -11,6 +11,4 @@ VAULT_TOKEN = os.getenv("VAULT_TOKEN")
 # when the Vault server is started in “dev” mode.
 
 if __name__ == "__main__":
-	# Purposely not passing in a token here to illustrated that the client is not authenticated.
 	client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
-

@@ -35,7 +35,7 @@ cd setup/
 unset VAULT_TOKEN
 export APPROLE_ROLE_ID=$(vault read -format=json auth/approle/role/example-approle/role-id | jq -r .data.role_id)
 export APPROLE_SECRET_ID=$(vault write -format=json -f auth/approle/role/example-approle/secret-id | jq -r .data.secret_id)
-python auth/approle.py
+python examples/auth/approle.py
 ```
 
 ## Secrets Engines
@@ -45,7 +45,7 @@ python auth/approle.py
 ```bash
 export VAULT_ADDR="http://127.0.0.1:8200"
 export VAULT_TOKEN="root"
-python engines/kv.py
+python examples/engines/kv.py
 ```
 
 ### Transit
@@ -53,7 +53,7 @@ python engines/kv.py
 ```bash
 export VAULT_ADDR="http://127.0.0.1:8200"
 export VAULT_TOKEN="root"
-python engines/transit.py
+python examples/engines/transit.py
 ```
 
 ### PKI
@@ -61,7 +61,7 @@ python engines/transit.py
 ```bash
 export VAULT_ADDR="http://127.0.0.1:8200"
 export VAULT_TOKEN="root"
-python engines/pki.py
+python examples/engines/pki.py
 ```
 
 ### Databases
@@ -69,5 +69,5 @@ python engines/pki.py
 ```bash
 export VAULT_ADDR="http://127.0.0.1:8200"
 export VAULT_TOKEN="root"
-python engines/database.py
+python examples/engines/database.py
 ```

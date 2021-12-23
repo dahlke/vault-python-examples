@@ -28,6 +28,8 @@ vault write auth/approle/role/example-approle \
 echo "Configuring the PKI secrets engine..."
 
 echo "Configuring the transit secrets engine..."
+vault secrets enable transit
+vault write -f transit/keys/example-transit-key
 
 echo "Configuring the database secrets engine..."
 
