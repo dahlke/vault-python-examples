@@ -37,7 +37,7 @@ vault write -f transit/keys/example-transit-key
 echo "Enabling the database secrets engine..."
 vault secrets enable database
 
-echo "Configuring the database secrets engine for Postgres for the root user"
+echo "Configuring the database secrets engine for Postgres for the root user..."
 vault write database/config/example-postgresql-database \
     plugin_name=postgresql-database-plugin \
     allowed_roles="postgres-app" \
@@ -45,11 +45,33 @@ vault write database/config/example-postgresql-database \
     username="postgres" \
     password="postgres"
 
-echo "Configuring the database secrets engine for Postgres for the example AppRole role"
+echo "Configuring the database secrets engine for Postgres for the example AppRole role..."
 vault write database/roles/postgres-app \
     db_name=example-postgresql-database \
     creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
         GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
     default_ttl="30s" \
+
+echo "Enabling the pki secrets engine..."
+vault secrets enable pki
+
+echo "Configuring the pki secrets engine..."
+vault secrets tune -max-lease-ttl=8760h pki
+
+echo "Update the CRL location and issuing certificates..."
+vault write pki/config/urls \
+    issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" \
+    crl_distribution_points="http://127.0.0.1:8200/v1/pki/crl"
+
+echo "Configure a CA certificate and private key. Vault can accept an existing key pair, or it can generate its own self-signed root..."
+vault write pki/root/generate/internal \
+    common_name=example.com \
+    ttl=8760h
+
+echo "Configure a role that maps a name in Vault to a procedure for generating a certificate..."
+vault write pki/roles/example-dot-com \
+    allowed_domains=example.com \
+    allow_subdomains=true \
+    max_ttl=72h
 
 echo "Done."
