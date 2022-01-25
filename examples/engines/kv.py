@@ -15,8 +15,8 @@ if __name__ == "__main__":
 	client = hvac.Client(url=VAULT_ADDR, token=VAULT_TOKEN)
 
 	# List the secrets
-	list_response = client.secrets.kv.v2.list_secrets(path="applications")
-	print("Listed secrets:", list_response["data"])
+	list_resp = client.secrets.kv.v2.list_secrets(path="applications")
+	print("Listed secrets:", list_resp["data"])
 
 	# Create a new secret
 	client.secrets.kv.v2.create_or_update_secret(
@@ -25,13 +25,13 @@ if __name__ == "__main__":
 	)
 
 	# List the paths again and see the one that was created
-	list_response = client.secrets.kv.v2.list_secrets(path="applications")
-	print("Listed secrets after creation:", list_response["data"])
+	list_resp = client.secrets.kv.v2.list_secrets(path="applications")
+	print("Listed secrets after creation:", list_resp["data"])
 
 	# Read the new secret
 	# NOTE: TODO dev mode
-	read_response = client.secrets.kv.read_secret_version(path="applications/example-kv")
-	print("Created secret:", read_response["data"]["data"])
+	read_resp = client.secrets.kv.read_secret_version(path="applications/example-kv")
+	print("Created secret:", read_resp["data"]["data"])
 
 	# Update the new secret
 	client.secrets.kv.v2.create_or_update_secret(
@@ -40,8 +40,8 @@ if __name__ == "__main__":
 	)
 
 	# Read the updated secret
-	read_response = client.secrets.kv.read_secret_version(path="applications/example-kv")
-	print("Updated secret:", read_response["data"]["data"])
+	read_resp = client.secrets.kv.read_secret_version(path="applications/example-kv")
+	print("Updated secret:", read_resp["data"]["data"])
 
 	# Delete the updated secret
 	client.secrets.kv.v2.delete_metadata_and_all_versions(

@@ -23,8 +23,8 @@ def get_kv_secret_with_approle():
 	)
 
  	# Read the application's data from KV once logged in
-	read_response = client.secrets.kv.read_secret_version(path="applications/example-approle")
-	print("Read secret:", read_response["data"]["data"])
+	read_resp = client.secrets.kv.read_secret_version(path="applications/example-approle")
+	print("Read secret:", read_resp["data"]["data"])
 
 if __name__ == "__main__":
 	get_kv_secret_with_approle()
